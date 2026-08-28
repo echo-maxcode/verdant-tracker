@@ -1,8 +1,8 @@
-import { Flower2, Leaf, Sprout, TreeDeciduous, Cactus } from "lucide-react";
+import { Flower2, Leaf, Sprout, TreeDeciduous } from "lucide-react";
 
 const speciesIcon = (species: string) => {
   const s = species.toLowerCase();
-  if (s.includes("cactus") || s.includes("succulent")) return Cactus;
+  if (s.includes("cactus") || s.includes("succulent")) return Sprout;
   if (s.includes("fern") || s.includes("palm")) return TreeDeciduous;
   if (s.includes("basil") || s.includes("herb") || s.includes("mint"))
     return Sprout;
