@@ -51,8 +51,10 @@ function WateringLogPage() {
     () =>
       [...log]
         .sort((a, b) => (a.date < b.date ? 1 : -1))
-        .map((e) => ({ entry: e, plant: plantById[e.plantId] }))
-        .filter((r) => r.plant),
+        .flatMap((e) => {
+          const plant = plantById[e.plantId];
+          return plant ? [{ entry: e, plant }] : [];
+        }),
     [log, plantById],
   );
 
@@ -117,7 +119,7 @@ function WateringLogPage() {
                   className="grid grid-cols-1 gap-1.5 px-5 py-3.5 text-sm transition hover:bg-secondary/40 sm:grid-cols-[2fr_1fr_1fr_1fr] sm:items-center sm:gap-4"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <PlantAvatar name={plant.name} className="h-8 w-8 shrink-0" />
+                    <PlantAvatar species={plant.species} className="h-8 w-8 shrink-0" />
                     <div className="min-w-0">
                       <p className="truncate font-semibold text-foreground">
                         {plant.name}
