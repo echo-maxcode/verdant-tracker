@@ -23,7 +23,7 @@ export function PlantAvatar({
     <span
       className={`flex items-center justify-center rounded-xl bg-sage text-leaf ${className}`}
     >
-      <Icon className="h-5/12 w-5/12 min-h-5 min-w-5" />
+      <Icon className="h-5 w-5" />
     </span>
   );
 }
