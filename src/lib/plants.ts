@@ -135,12 +135,105 @@ export function removePlant(id: string) {
   });
 }
 
-export function logWatering(id: string) {
+export function logWatering(id: string, loggedBy = "Aisha") {
+  const plant = state.plants.find((p) => p.id === id);
   setState({
     plants: state.plants.map((p) =>
       p.id === id ? { ...p, lastWatered: daysAgo(0) } : p,
     ),
-    log: [{ id: crypto.randomUUID(), plantId: id, date: daysAgo(0), liters: 0.25 }, ...state.log],
+    log: [
+      {
+        id: crypto.randomUUID(),
+        plantId: id,
+        date: daysAgo(0),
+        liters: plant ? Math.round((plant.frequencyDays / 20 + 0.15) * 100) / 100 : 0.25,
+        loggedBy,
+      },
+      ...state.log,
+    ],
     ecoPoints: state.ecoPoints + 10,
   });
 }
+
+/* --------------------------- analytics ---------------------------- */
+
+export function daysSince(iso: string): number {
+  const then = new Date(iso);
+  then.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Math.round((today.getTime() - then.getTime()) / 86_400_000);
+}
+
+/** True when the plant was watered inside its scheduled interval. */
+export function wateredRecently(plant: Plant): boolean {
+  return daysSince(plant.lastWatered) < plant.frequencyDays;
+}
+
+export type DayPoint = { date: string; label: string; waterings: number };
+
+export function wateringsPerDay(log: WateringEntry[], days = 30): DayPoint[] {
+  const points: DayPoint[] = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const iso = daysAgo(i);
+    points.push({
+      date: iso,
+      label: formatDate(new Date(iso)),
+      waterings: log.filter((e) => e.date === iso).length,
+    });
+  }
+  return points;
+}
+
+export type WeekPoint = {
+  week: string;
+  baseline: number;
+  actual: number;
+  saved: number;
+};
+
+/** Baseline = a fixed every-2-days schedule for every plant. */
+export function weeklyWaterUse(
+  log: WateringEntry[],
+  plantCount: number,
+  weeks = 4,
+): WeekPoint[] {
+  const out: WeekPoint[] = [];
+  const baselineLiters = plantCount * 3.5 * 0.45; // 3.5 waterings/week @ 0.45 L
+  for (let w = weeks - 1; w >= 0; w--) {
+    const start = daysAgo(w * 7 + 6);
+    const end = daysAgo(w * 7);
+    const actual = log
+      .filter((e) => e.date >= start && e.date <= end)
+      .reduce((sum, e) => sum + e.liters, 0);
+    out.push({
+      week: w === 0 ? "This week" : `${w}w ago`,
+      baseline: Math.round(baselineLiters * 10) / 10,
+      actual: Math.round(actual * 10) / 10,
+      saved: Math.round(Math.max(0, baselineLiters - actual) * 10) / 10,
+    });
+  }
+  return out;
+}
+
+export function longestStreak(log: WateringEntry[]): number {
+  const dates = [...new Set(log.map((e) => e.date))].sort();
+  let best = 0;
+  let run = 0;
+  let prev: number | null = null;
+  for (const d of dates) {
+    const t = new Date(d).getTime();
+    run = prev !== null && t - prev === 86_400_000 ? run + 1 : 1;
+    prev = t;
+    if (run > best) best = run;
+  }
+  return best;
+}
+
+export function waterSavedThisMonth(
+  log: WateringEntry[],
+  plantCount: number,
+): number {
+  return weeklyWaterUse(log, plantCount).reduce((s, w) => s + w.saved, 0);
+}
+
