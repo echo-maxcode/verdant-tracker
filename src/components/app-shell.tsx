@@ -37,9 +37,9 @@ export function AppShell() {
             <Leaf className="h-5 w-5" />
           </span>
           <span className="font-display text-lg font-semibold leading-tight text-foreground">
-            Plant Care
+            PlantPal
             <span className="block text-xs font-normal text-muted-foreground">
-              & Water-Saving Log
+              Plant Care & Water-Saving Log
             </span>
           </span>
         </Link>
