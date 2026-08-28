@@ -14,7 +14,11 @@ export type WateringEntry = {
   plantId: string;
   date: string;
   liters: number;
+  loggedBy: string;
 };
+
+export const CAREGIVERS = ["Aisha", "Ben", "Chloe", "Dev"] as const;
+
 
 /* ------------------------------------------------------------------ */
 /* Mock data — swap these for API calls later. The store API stays the */
