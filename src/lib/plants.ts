@@ -41,10 +41,35 @@ const initialPlants: Plant[] = [
 ];
 
 const initialLog: WateringEntry[] = [
-  { id: "w1", plantId: "p3", date: daysAgo(2), liters: 0.3 },
-  { id: "w2", plantId: "p5", date: daysAgo(2), liters: 0.2 },
-  { id: "w3", plantId: "p6", date: daysAgo(3), liters: 0.4 },
+  { id: "w01", plantId: "p3", date: daysAgo(2), liters: 0.3, loggedBy: "Aisha" },
+  { id: "w02", plantId: "p5", date: daysAgo(2), liters: 0.2, loggedBy: "Ben" },
+  { id: "w03", plantId: "p6", date: daysAgo(3), liters: 0.4, loggedBy: "Chloe" },
+  { id: "w04", plantId: "p2", date: daysAgo(4), liters: 0.35, loggedBy: "Aisha" },
+  { id: "w05", plantId: "p4", date: daysAgo(4), liters: 0.5, loggedBy: "Dev" },
+  { id: "w06", plantId: "p5", date: daysAgo(4), liters: 0.2, loggedBy: "Ben" },
+  { id: "w07", plantId: "p1", date: daysAgo(6), liters: 0.6, loggedBy: "Chloe" },
+  { id: "w08", plantId: "p5", date: daysAgo(6), liters: 0.2, loggedBy: "Aisha" },
+  { id: "w09", plantId: "p2", date: daysAgo(7), liters: 0.35, loggedBy: "Dev" },
+  { id: "w10", plantId: "p3", date: daysAgo(8), liters: 0.3, loggedBy: "Ben" },
+  { id: "w11", plantId: "p5", date: daysAgo(9), liters: 0.2, loggedBy: "Chloe" },
+  { id: "w12", plantId: "p2", date: daysAgo(10), liters: 0.35, loggedBy: "Aisha" },
+  { id: "w13", plantId: "p6", date: daysAgo(12), liters: 0.4, loggedBy: "Dev" },
+  { id: "w14", plantId: "p1", date: daysAgo(13), liters: 0.6, loggedBy: "Ben" },
+  { id: "w15", plantId: "p3", date: daysAgo(14), liters: 0.3, loggedBy: "Chloe" },
+  { id: "w16", plantId: "p2", date: daysAgo(15), liters: 0.35, loggedBy: "Aisha" },
+  { id: "w17", plantId: "p5", date: daysAgo(16), liters: 0.2, loggedBy: "Dev" },
+  { id: "w18", plantId: "p4", date: daysAgo(19), liters: 0.5, loggedBy: "Ben" },
+  { id: "w19", plantId: "p1", date: daysAgo(21), liters: 0.6, loggedBy: "Chloe" },
+  { id: "w20", plantId: "p6", date: daysAgo(24), liters: 0.4, loggedBy: "Aisha" },
 ];
+
+/* Mock forecast signal — swap for a weather API later. */
+export const RAIN_FORECAST_LOCATIONS = ["Balcony", "Kitchen"];
+
+export function hasRainForecast(plant: Plant): boolean {
+  return RAIN_FORECAST_LOCATIONS.includes(plant.location);
+}
+
 
 /* ------------------------------ store ----------------------------- */
 
