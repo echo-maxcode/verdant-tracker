@@ -1,4 +1,4 @@
-import { Link, Outlet } from "@tanstack/react-router";
+import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import {
   BarChart3,
   Droplets,
@@ -25,6 +25,17 @@ const idleClass =
   "text-muted-foreground hover:bg-accent hover:text-accent-foreground";
 
 export function AppShell() {
+  // Standalone public routes (e.g. /plant/:id QR-scan views) render without
+  // the sidebar or bottom tab bar — a full-bleed mobile-first experience.
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  if (pathname.startsWith("/plant/")) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Outlet />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Desktop sidebar */}
