@@ -15,6 +15,7 @@ import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as PlantsRouteImport } from './routes/plants'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as WateringLogRouteImport } from './routes/watering-log'
+import { Route as PlantIdRouteImport } from './routes/plant.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const WateringLogRoute = WateringLogRouteImport.update({
   path: '/watering-log',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlantIdRoute = PlantIdRouteImport.update({
+  id: '/plant/$id',
+  path: '/plant/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/plants': typeof PlantsRoute
   '/profile': typeof ProfileRoute
   '/watering-log': typeof WateringLogRoute
+  '/plant/$id': typeof PlantIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/plants': typeof PlantsRoute
   '/profile': typeof ProfileRoute
   '/watering-log': typeof WateringLogRoute
+  '/plant/$id': typeof PlantIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/plants': typeof PlantsRoute
   '/profile': typeof ProfileRoute
   '/watering-log': typeof WateringLogRoute
+  '/plant/$id': typeof PlantIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/plants'
     | '/profile'
     | '/watering-log'
+    | '/plant/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/plants'
     | '/profile'
     | '/watering-log'
+    | '/plant/$id'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/plants'
     | '/profile'
     | '/watering-log'
+    | '/plant/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   PlantsRoute: typeof PlantsRoute
   ProfileRoute: typeof ProfileRoute
   WateringLogRoute: typeof WateringLogRoute
+  PlantIdRoute: typeof PlantIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WateringLogRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/plant/$id': {
+      id: '/plant/$id'
+      path: '/plant/$id'
+      fullPath: '/plant/$id'
+      preLoaderRoute: typeof PlantIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlantsRoute: PlantsRoute,
   ProfileRoute: ProfileRoute,
   WateringLogRoute: WateringLogRoute,
+  PlantIdRoute: PlantIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

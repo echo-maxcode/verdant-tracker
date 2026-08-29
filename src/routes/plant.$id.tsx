@@ -18,8 +18,7 @@ import {
 } from "@/lib/plants";
 
 export const Route = createFileRoute("/plant/$id")({
-  head: ({ params }) => {
-    const plant = usePlantStore.getState?.();
+  head: () => {
     const title = "Plant Profile — PlantPal";
     return {
       meta: [
