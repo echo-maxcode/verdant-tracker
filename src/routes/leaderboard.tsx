@@ -235,8 +235,14 @@ function LeaderboardPage() {
             {users.map((u, idx) => {
               const rank = idx + 1;
               const me = u.isCurrentUser;
-              const medal =
-                rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : null;
+              const podium =
+                rank === 1
+                  ? "bg-amber-warm text-amber-warm-foreground"
+                  : rank === 2
+                    ? "bg-sage text-leaf"
+                    : rank === 3
+                      ? "bg-cream text-cream-foreground"
+                      : "";
               return (
                 <li
                   key={u.id}
@@ -248,8 +254,15 @@ function LeaderboardPage() {
                   ].join(" ")}
                 >
                   <div className="flex items-center gap-2 font-semibold text-foreground">
-                    {medal ? (
-                      <span className="text-lg">{medal}</span>
+                    {podium ? (
+                      <span
+                        className={[
+                          "flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold",
+                          podium,
+                        ].join(" ")}
+                      >
+                        {rank}
+                      </span>
                     ) : (
                       <span className="flex h-7 w-7 items-center justify-center rounded-full bg-secondary text-xs font-bold text-secondary-foreground">
                         {rank}
