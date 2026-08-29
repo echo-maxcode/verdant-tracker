@@ -237,3 +237,49 @@ export function waterSavedThisMonth(
   return weeklyWaterUse(log, plantCount).reduce((s, w) => s + w.saved, 0);
 }
 
+/* --------------------------- leaderboard -------------------------- */
+
+export type Badge = {
+  id: string;
+  name: string;
+  description: string;
+  /** points threshold at which the badge is earned */
+  threshold: number;
+};
+
+export const BADGES: Badge[] = [
+  { id: "first-plant", name: "First Plant", description: "Add your first plant", threshold: 0 },
+  { id: "seven-streak", name: "7-Day Streak", description: "Water every day for a week", threshold: 70 },
+  { id: "rain-saver", name: "Rain Saver", description: "Skip a watering on a rain forecast", threshold: 130 },
+  { id: "thirty-streak", name: "30-Day Streak", description: "A full month of care", threshold: 210 },
+  { id: "water-wise", name: "Water Wise", description: "Save 10L versus the baseline", threshold: 280 },
+  { id: "green-thumb", name: "Green Thumb", description: "Care for 10 plants", threshold: 350 },
+];
+
+export type LeaderboardUser = {
+  id: string;
+  name: string;
+  ecoPoints: number;
+  badgeCount: number;
+  isCurrentUser?: boolean;
+};
+
+export const CURRENT_USER_ID = "u-self";
+
+export const LEADERBOARD_USERS: LeaderboardUser[] = [
+  { id: "u1", name: "Mara Okonkwo", ecoPoints: 410, badgeCount: 6 },
+  { id: "u2", name: "Leo Tanaka", ecoPoints: 372, badgeCount: 5 },
+  { id: "u3", name: "Priya Nair", ecoPoints: 318, badgeCount: 4 },
+  { id: CURRENT_USER_ID, name: "You", ecoPoints: 240, badgeCount: 3, isCurrentUser: true },
+  { id: "u4", name: "Sam Whitfield", ecoPoints: 205, badgeCount: 3 },
+  { id: "u5", name: "Noa Cohen", ecoPoints: 168, badgeCount: 3 },
+  { id: "u6", name: "Diego Marín", ecoPoints: 142, badgeCount: 2 },
+  { id: "u7", name: "Ingrid Solberg", ecoPoints: 96, badgeCount: 2 },
+  { id: "u8", name: "Tariq Hossain", ecoPoints: 64, badgeCount: 1 },
+];
+
+/** Next badge the given points total has not yet reached. */
+export function nextBadge(points: number): Badge | null {
+  return BADGES.find((b) => points < b.threshold) ?? null;
+}
+
