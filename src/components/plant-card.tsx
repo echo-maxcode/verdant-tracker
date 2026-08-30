@@ -8,6 +8,7 @@ import {
   type Plant,
 } from "@/lib/plants";
 import { PlantAvatar } from "@/components/plant-avatar";
+import { PlantQrButton } from "@/components/plant-qr-dialog";
 
 export function PlantCard({ plant }: { plant: Plant }) {
   const thirsty = needsWater(plant);
