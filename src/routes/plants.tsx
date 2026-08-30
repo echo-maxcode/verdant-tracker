@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/app-shell";
 import { PlantAvatar } from "@/components/plant-avatar";
+import { PlantQrButton } from "@/components/plant-qr-dialog";
 import {
   ConfirmDeleteDialog,
   PlantFormDialog,
