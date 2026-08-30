@@ -31,6 +31,7 @@ export function PlantCard({ plant }: { plant: Plant }) {
           />
           {thirsty ? "Needs Water" : "Recently Watered"}
         </span>
+        </div>
       </div>
 
       <h3 className="mt-4 font-display text-lg font-semibold text-foreground">
