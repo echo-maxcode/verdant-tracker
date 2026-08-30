@@ -94,6 +94,7 @@ export function usePlantStore<T>(selector: (s: State) => T): T {
       return () => listeners.delete(cb);
     },
     () => selector(state),
+    () => selector(state),
   );
 }
 
