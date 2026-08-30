@@ -180,9 +180,9 @@ function PlantProfilePage() {
               L
             </span>
           </p>
-          <p className="relative mt-2 inline-flex items-center justify-center gap-1.5 text-sm text-primary-foreground/90">
-            vs. a fixed every-2-day baseline. Every drop you skip adds up.
-            <Sprout className="h-4 w-4 shrink-0" />
+          <p className="relative mt-2 text-sm text-primary-foreground/90">
+            vs. a fixed every-2-day baseline. Every drop you skip adds up.{" "}
+            <Sprout className="-mt-0.5 inline h-4 w-4 align-middle" />
           </p>
         </section>
 
