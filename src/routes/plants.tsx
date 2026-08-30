@@ -111,6 +111,7 @@ function PlantsPage() {
                     </p>
                   </div>
                   <div className="flex shrink-0 flex-col gap-1">
+                    <PlantQrButton plant={p} />
                     <button
                       onClick={() => {
                         setEditing(p);
