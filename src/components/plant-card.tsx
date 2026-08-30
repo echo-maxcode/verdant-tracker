@@ -8,6 +8,7 @@ import {
   type Plant,
 } from "@/lib/plants";
 import { PlantAvatar } from "@/components/plant-avatar";
+import { PlantQrButton } from "@/components/plant-qr-dialog";
 
 export function PlantCard({ plant }: { plant: Plant }) {
   const thirsty = needsWater(plant);
@@ -16,6 +17,8 @@ export function PlantCard({ plant }: { plant: Plant }) {
     <div className="group flex flex-col rounded-2xl border border-border bg-card p-5 shadow-soft transition-all duration-200 hover:-translate-y-1 hover:shadow-lift">
       <div className="flex items-start justify-between gap-3">
         <PlantAvatar species={plant.species} />
+        <div className="flex items-center gap-1">
+        <PlantQrButton plant={plant} />
         <span
           className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
             thirsty
@@ -28,6 +31,7 @@ export function PlantCard({ plant }: { plant: Plant }) {
           />
           {thirsty ? "Needs Water" : "Recently Watered"}
         </span>
+        </div>
       </div>
 
       <h3 className="mt-4 font-display text-lg font-semibold text-foreground">

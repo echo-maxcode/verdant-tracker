@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/app-shell";
 import { PlantAvatar } from "@/components/plant-avatar";
+import { PlantQrButton } from "@/components/plant-qr-dialog";
 import {
   ConfirmDeleteDialog,
   PlantFormDialog,
@@ -111,6 +112,7 @@ function PlantsPage() {
                     </p>
                   </div>
                   <div className="flex shrink-0 flex-col gap-1">
+                    <PlantQrButton plant={p} />
                     <button
                       onClick={() => {
                         setEditing(p);
