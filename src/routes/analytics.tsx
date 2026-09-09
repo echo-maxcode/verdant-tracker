@@ -14,7 +14,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useEffect, useState } from "react";
+import { Line, LineChart } from "recharts";
 import { PageHeader } from "@/components/app-shell";
+import { LiveSensorDot } from "@/components/sensor-readout";
+import { SENSOR_PLANT_IDS, type SensorReading } from "@/lib/sensors";
 import {
   longestStreak,
   usePlantStore,
