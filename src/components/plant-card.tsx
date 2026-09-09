@@ -9,6 +9,7 @@ import {
 } from "@/lib/plants";
 import { PlantAvatar } from "@/components/plant-avatar";
 import { PlantQrButton } from "@/components/plant-qr-dialog";
+import { SensorReadout } from "@/components/sensor-readout";
 
 export function PlantCard({ plant }: { plant: Plant }) {
   const thirsty = needsWater(plant);
@@ -48,6 +49,8 @@ export function PlantCard({ plant }: { plant: Plant }) {
           {formatDate(nextWateringDate(plant))}
         </span>
       </div>
+
+      <SensorReadout plantId={plant.id} />
 
       <button
         onClick={() => {

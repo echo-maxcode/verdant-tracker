@@ -16,6 +16,7 @@ import { Route as PlantsRouteImport } from './routes/plants'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as WateringLogRouteImport } from './routes/watering-log'
 import { Route as PlantIdRouteImport } from './routes/plant.$id'
+import { Route as ApiSensorReadingsHistoryPlantIdRouteImport } from './routes/api/sensor-readings/history.$plantId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,12 @@ const PlantIdRoute = PlantIdRouteImport.update({
   path: '/plant/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSensorReadingsHistoryPlantIdRoute =
+  ApiSensorReadingsHistoryPlantIdRouteImport.update({
+    id: '/api/sensor-readings/history/$plantId',
+    path: '/api/sensor-readings/history/$plantId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/watering-log': typeof WateringLogRoute
   '/plant/$id': typeof PlantIdRoute
+  '/api/sensor-readings/history/$plantId': typeof ApiSensorReadingsHistoryPlantIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +78,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/watering-log': typeof WateringLogRoute
   '/plant/$id': typeof PlantIdRoute
+  '/api/sensor-readings/history/$plantId': typeof ApiSensorReadingsHistoryPlantIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +89,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/watering-log': typeof WateringLogRoute
   '/plant/$id': typeof PlantIdRoute
+  '/api/sensor-readings/history/$plantId': typeof ApiSensorReadingsHistoryPlantIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +101,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/watering-log'
     | '/plant/$id'
+    | '/api/sensor-readings/history/$plantId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +111,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/watering-log'
     | '/plant/$id'
+    | '/api/sensor-readings/history/$plantId'
   id:
     | '__root__'
     | '/'
@@ -109,6 +121,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/watering-log'
     | '/plant/$id'
+    | '/api/sensor-readings/history/$plantId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +132,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   WateringLogRoute: typeof WateringLogRoute
   PlantIdRoute: typeof PlantIdRoute
+  ApiSensorReadingsHistoryPlantIdRoute: typeof ApiSensorReadingsHistoryPlantIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlantIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/sensor-readings/history/$plantId': {
+      id: '/api/sensor-readings/history/$plantId'
+      path: '/api/sensor-readings/history/$plantId'
+      fullPath: '/api/sensor-readings/history/$plantId'
+      preLoaderRoute: typeof ApiSensorReadingsHistoryPlantIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +204,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   WateringLogRoute: WateringLogRoute,
   PlantIdRoute: PlantIdRoute,
+  ApiSensorReadingsHistoryPlantIdRoute: ApiSensorReadingsHistoryPlantIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
