@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Droplets, Flame, Sprout, TrendingUp } from "lucide-react";
+import { Droplets, Flame, Radio, Sprout, TrendingUp } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useMemo } from "react";
 import {
