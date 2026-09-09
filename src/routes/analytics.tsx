@@ -197,6 +197,118 @@ function AnalyticsPage() {
           </div>
         </ChartCard>
       </div>
+
+      <div className="mt-5 px-5 sm:px-8">
+        <SoilMoistureCard plants={plants} />
+      </div>
+    </div>
+  );
+}
+
+function SoilMoistureCard({ plants }: { plants: Array<{ id: string; name: string }> }) {
+  const sensorPlants = plants.filter((p) => SENSOR_PLANT_IDS.includes(p.id));
+  const [plantId, setPlantId] = useState(sensorPlants[0]?.id ?? SENSOR_PLANT_IDS[0]!);
+  const [readings, setReadings] = useState<SensorReading[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const res = await fetch(`/api/sensor-readings/history/${plantId}`);
+        if (!res.ok) throw new Error(`Request failed (${res.status})`);
+        const json = (await res.json()) as { readings: SensorReading[] };
+        if (!cancelled) {
+          setReadings(json.readings ?? []);
+          setError(null);
+        }
+      } catch {
+        if (!cancelled) setError("Sensor feed unavailable");
+      }
+    };
+    load();
+    const id = setInterval(load, 30_000);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, [plantId]);
+
+  const data = readings.map((r) => ({
+    label: new Date(r.t).toLocaleTimeString("en-US", { hour: "numeric" }),
+    moisture: r.moisture,
+    temperature: r.temperature,
+  }));
+  const latest = readings.at(-1);
+
+  return (
+    <div className="animate-fade-in rounded-2xl border border-border bg-card p-5 shadow-soft transition hover:shadow-lift">
+      <div className="mb-4 flex flex-wrap items-center gap-3">
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sage text-leaf">
+          <Radio className="h-4.5 w-4.5" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <h2 className="truncate font-display text-base font-semibold text-foreground">
+            Soil moisture — past 24 hours
+          </h2>
+          <p className="truncate text-xs text-muted-foreground">
+            Hardware sensor readings
+            {latest ? ` · now ${latest.moisture.toFixed(1)}% at ${latest.temperature.toFixed(1)}°C` : ""}
+          </p>
+        </div>
+        <LiveSensorDot />
+        {sensorPlants.length > 1 && (
+          <select
+            value={plantId}
+            onChange={(e) => setPlantId(e.target.value)}
+            className="rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground"
+          >
+            {sensorPlants.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.name}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+
+      {error ? (
+        <p className="py-10 text-center text-sm text-muted-foreground">{error}</p>
+      ) : (
+        <ResponsiveContainer width="100%" height={260}>
+          <LineChart data={data} margin={{ top: 10, right: 8, left: -22, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="4 6" stroke="var(--border)" vertical={false} />
+            <XAxis
+              dataKey="label"
+              tickLine={false}
+              axisLine={false}
+              interval={7}
+              tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
+            />
+            <YAxis
+              domain={[0, 100]}
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
+            />
+            <Tooltip
+              cursor={{ stroke: "var(--primary)", strokeOpacity: 0.25 }}
+              content={<SoftTooltip unit="%" />}
+            />
+            <Line
+              type="monotone"
+              dataKey="moisture"
+              name="Soil moisture"
+              stroke="var(--primary)"
+              strokeWidth={2.5}
+              dot={false}
+              activeDot={{ r: 5, fill: "var(--primary)", stroke: "var(--card)", strokeWidth: 2 }}
+              animationDuration={1400}
+              animationEasing="ease-out"
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      )}
     </div>
   );
 }
