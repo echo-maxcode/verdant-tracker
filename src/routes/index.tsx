@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Droplets, Flame, Sprout, Sparkles } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { PlantCard } from "@/components/plant-card";
-import { needsWater, usePlantStore } from "@/lib/plants";
+import { currentStreak, needsWater, usePlantStore } from "@/lib/plants";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -60,18 +60,24 @@ function StatCard({
   );
 }
 
+function greeting(): string {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 18) return "Good afternoon";
+  return "Good evening";
+}
+
 function Dashboard() {
   const plants = usePlantStore((s) => s.plants);
   const ecoPoints = usePlantStore((s) => s.ecoPoints);
+  const log = usePlantStore((s) => s.log);
   const thirsty = plants.filter(needsWater).length;
-
-  // Simple streak derived from the log: consecutive days with ≥1 watering
-  const streak = 5;
+  const streak = currentStreak(log);
 
   return (
     <div>
       <PageHeader
-        title="Good morning, gardener 🌱"
+        title={`${greeting()}, gardener 🌱`}
         subtitle="Here's how your indoor jungle is doing today."
       />
 
