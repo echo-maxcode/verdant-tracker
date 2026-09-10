@@ -231,6 +231,30 @@ export function longestStreak(log: WateringEntry[]): number {
   return best;
 }
 
+/**
+ * Current watering streak: consecutive days ending today (or yesterday, so the
+ * streak doesn't reset mid-day) that each have at least one watering entry.
+ */
+export function currentStreak(log: WateringEntry[]): number {
+  const wateredDays = new Set(log.map((e) => e.date));
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Allow the streak to count from yesterday if nothing's been logged yet today.
+  const startOffset = wateredDays.has(today.toISOString().slice(0, 10)) ? 0 : 1;
+  let streak = 0;
+  for (let i = startOffset; ; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    if (wateredDays.has(d.toISOString().slice(0, 10))) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
 export function waterSavedThisMonth(
   log: WateringEntry[],
   plantCount: number,
