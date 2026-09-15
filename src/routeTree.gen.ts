@@ -12,10 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as PlantsRouteImport } from './routes/plants'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as WateringLogRouteImport } from './routes/watering-log'
 import { Route as PlantIdRouteImport } from './routes/plant.$id'
+import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
+import { Route as ApiAuthRegisterRouteImport } from './routes/api/auth/register'
+import { Route as ApiUsersMeRouteImport } from './routes/api/users/me'
 import { Route as ApiSensorReadingsHistoryPlantIdRouteImport } from './routes/api/sensor-readings/history.$plantId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -33,6 +38,11 @@ const LeaderboardRoute = LeaderboardRouteImport.update({
   path: '/leaderboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlantsRoute = PlantsRouteImport.update({
   id: '/plants',
   path: '/plants',
@@ -43,6 +53,11 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WateringLogRoute = WateringLogRouteImport.update({
   id: '/watering-log',
   path: '/watering-log',
@@ -51,6 +66,21 @@ const WateringLogRoute = WateringLogRouteImport.update({
 const PlantIdRoute = PlantIdRouteImport.update({
   id: '/plant/$id',
   path: '/plant/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthLoginRoute = ApiAuthLoginRouteImport.update({
+  id: '/api/auth/login',
+  path: '/api/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthRegisterRoute = ApiAuthRegisterRouteImport.update({
+  id: '/api/auth/register',
+  path: '/api/auth/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiUsersMeRoute = ApiUsersMeRouteImport.update({
+  id: '/api/users/me',
+  path: '/api/users/me',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiSensorReadingsHistoryPlantIdRoute =
@@ -64,20 +94,30 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/leaderboard': typeof LeaderboardRoute
+  '/login': typeof LoginRoute
   '/plants': typeof PlantsRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/watering-log': typeof WateringLogRoute
   '/plant/$id': typeof PlantIdRoute
+  '/api/auth/login': typeof ApiAuthLoginRoute
+  '/api/auth/register': typeof ApiAuthRegisterRoute
+  '/api/users/me': typeof ApiUsersMeRoute
   '/api/sensor-readings/history/$plantId': typeof ApiSensorReadingsHistoryPlantIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/leaderboard': typeof LeaderboardRoute
+  '/login': typeof LoginRoute
   '/plants': typeof PlantsRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/watering-log': typeof WateringLogRoute
   '/plant/$id': typeof PlantIdRoute
+  '/api/auth/login': typeof ApiAuthLoginRoute
+  '/api/auth/register': typeof ApiAuthRegisterRoute
+  '/api/users/me': typeof ApiUsersMeRoute
   '/api/sensor-readings/history/$plantId': typeof ApiSensorReadingsHistoryPlantIdRoute
 }
 export interface FileRoutesById {
@@ -85,10 +125,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/leaderboard': typeof LeaderboardRoute
+  '/login': typeof LoginRoute
   '/plants': typeof PlantsRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/watering-log': typeof WateringLogRoute
   '/plant/$id': typeof PlantIdRoute
+  '/api/auth/login': typeof ApiAuthLoginRoute
+  '/api/auth/register': typeof ApiAuthRegisterRoute
+  '/api/users/me': typeof ApiUsersMeRoute
   '/api/sensor-readings/history/$plantId': typeof ApiSensorReadingsHistoryPlantIdRoute
 }
 export interface FileRouteTypes {
@@ -97,30 +142,45 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/leaderboard'
+    | '/login'
     | '/plants'
     | '/profile'
+    | '/register'
     | '/watering-log'
     | '/plant/$id'
+    | '/api/auth/login'
+    | '/api/auth/register'
+    | '/api/users/me'
     | '/api/sensor-readings/history/$plantId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/analytics'
     | '/leaderboard'
+    | '/login'
     | '/plants'
     | '/profile'
+    | '/register'
     | '/watering-log'
     | '/plant/$id'
+    | '/api/auth/login'
+    | '/api/auth/register'
+    | '/api/users/me'
     | '/api/sensor-readings/history/$plantId'
   id:
     | '__root__'
     | '/'
     | '/analytics'
     | '/leaderboard'
+    | '/login'
     | '/plants'
     | '/profile'
+    | '/register'
     | '/watering-log'
     | '/plant/$id'
+    | '/api/auth/login'
+    | '/api/auth/register'
+    | '/api/users/me'
     | '/api/sensor-readings/history/$plantId'
   fileRoutesById: FileRoutesById
 }
@@ -128,10 +188,15 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyticsRoute: typeof AnalyticsRoute
   LeaderboardRoute: typeof LeaderboardRoute
+  LoginRoute: typeof LoginRoute
   PlantsRoute: typeof PlantsRoute
   ProfileRoute: typeof ProfileRoute
+  RegisterRoute: typeof RegisterRoute
   WateringLogRoute: typeof WateringLogRoute
   PlantIdRoute: typeof PlantIdRoute
+  ApiAuthLoginRoute: typeof ApiAuthLoginRoute
+  ApiAuthRegisterRoute: typeof ApiAuthRegisterRoute
+  ApiUsersMeRoute: typeof ApiUsersMeRoute
   ApiSensorReadingsHistoryPlantIdRoute: typeof ApiSensorReadingsHistoryPlantIdRoute
 }
 
@@ -158,6 +223,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeaderboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/plants': {
       id: '/plants'
       path: '/plants'
@@ -170,6 +242,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/watering-log': {
@@ -186,6 +265,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlantIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/login': {
+      id: '/api/auth/login'
+      path: '/api/auth/login'
+      fullPath: '/api/auth/login'
+      preLoaderRoute: typeof ApiAuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/register': {
+      id: '/api/auth/register'
+      path: '/api/auth/register'
+      fullPath: '/api/auth/register'
+      preLoaderRoute: typeof ApiAuthRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/users/me': {
+      id: '/api/users/me'
+      path: '/api/users/me'
+      fullPath: '/api/users/me'
+      preLoaderRoute: typeof ApiUsersMeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/sensor-readings/history/$plantId': {
       id: '/api/sensor-readings/history/$plantId'
       path: '/api/sensor-readings/history/$plantId'
@@ -200,10 +300,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyticsRoute: AnalyticsRoute,
   LeaderboardRoute: LeaderboardRoute,
+  LoginRoute: LoginRoute,
   PlantsRoute: PlantsRoute,
   ProfileRoute: ProfileRoute,
+  RegisterRoute: RegisterRoute,
   WateringLogRoute: WateringLogRoute,
   PlantIdRoute: PlantIdRoute,
+  ApiAuthLoginRoute: ApiAuthLoginRoute,
+  ApiAuthRegisterRoute: ApiAuthRegisterRoute,
+  ApiUsersMeRoute: ApiUsersMeRoute,
   ApiSensorReadingsHistoryPlantIdRoute: ApiSensorReadingsHistoryPlantIdRoute,
 }
 export const routeTree = rootRouteImport
