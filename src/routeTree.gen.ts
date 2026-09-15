@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as PlantsRouteImport } from './routes/plants'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as WateringLogRouteImport } from './routes/watering-log'
 import { Route as PlantIdRouteImport } from './routes/plant.$id'
 import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
@@ -36,6 +38,11 @@ const LeaderboardRoute = LeaderboardRouteImport.update({
   path: '/leaderboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlantsRoute = PlantsRouteImport.update({
   id: '/plants',
   path: '/plants',
@@ -44,6 +51,11 @@ const PlantsRoute = PlantsRouteImport.update({
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WateringLogRoute = WateringLogRouteImport.update({
@@ -82,8 +94,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/leaderboard': typeof LeaderboardRoute
+  '/login': typeof LoginRoute
   '/plants': typeof PlantsRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/watering-log': typeof WateringLogRoute
   '/plant/$id': typeof PlantIdRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
@@ -95,8 +109,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/leaderboard': typeof LeaderboardRoute
+  '/login': typeof LoginRoute
   '/plants': typeof PlantsRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/watering-log': typeof WateringLogRoute
   '/plant/$id': typeof PlantIdRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
@@ -109,8 +125,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/leaderboard': typeof LeaderboardRoute
+  '/login': typeof LoginRoute
   '/plants': typeof PlantsRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/watering-log': typeof WateringLogRoute
   '/plant/$id': typeof PlantIdRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
@@ -124,8 +142,10 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/leaderboard'
+    | '/login'
     | '/plants'
     | '/profile'
+    | '/register'
     | '/watering-log'
     | '/plant/$id'
     | '/api/auth/login'
@@ -137,8 +157,10 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/leaderboard'
+    | '/login'
     | '/plants'
     | '/profile'
+    | '/register'
     | '/watering-log'
     | '/plant/$id'
     | '/api/auth/login'
@@ -150,8 +172,10 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/leaderboard'
+    | '/login'
     | '/plants'
     | '/profile'
+    | '/register'
     | '/watering-log'
     | '/plant/$id'
     | '/api/auth/login'
@@ -164,8 +188,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyticsRoute: typeof AnalyticsRoute
   LeaderboardRoute: typeof LeaderboardRoute
+  LoginRoute: typeof LoginRoute
   PlantsRoute: typeof PlantsRoute
   ProfileRoute: typeof ProfileRoute
+  RegisterRoute: typeof RegisterRoute
   WateringLogRoute: typeof WateringLogRoute
   PlantIdRoute: typeof PlantIdRoute
   ApiAuthLoginRoute: typeof ApiAuthLoginRoute
@@ -197,6 +223,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeaderboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/plants': {
       id: '/plants'
       path: '/plants'
@@ -209,6 +242,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/watering-log': {
@@ -260,8 +300,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyticsRoute: AnalyticsRoute,
   LeaderboardRoute: LeaderboardRoute,
+  LoginRoute: LoginRoute,
   PlantsRoute: PlantsRoute,
   ProfileRoute: ProfileRoute,
+  RegisterRoute: RegisterRoute,
   WateringLogRoute: WateringLogRoute,
   PlantIdRoute: PlantIdRoute,
   ApiAuthLoginRoute: ApiAuthLoginRoute,

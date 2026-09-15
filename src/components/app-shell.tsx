@@ -1,4 +1,6 @@
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { useAuth } from "@/lib/auth-context";
 import {
   BarChart3,
   Droplets,
@@ -24,17 +26,41 @@ const activeClass =
 const idleClass =
   "text-muted-foreground hover:bg-accent hover:text-accent-foreground";
 
+// Routes reachable without an account: the QR-scan plant profiles (for expo
+// visitors) and the login / register screens themselves.
+function isPublicPath(pathname: string) {
+  return (
+    pathname.startsWith("/plant/") ||
+    pathname === "/login" ||
+    pathname === "/register"
+  );
+}
+
 export function AppShell() {
-  // Standalone public routes (e.g. /plant/:id QR-scan views) render without
-  // the sidebar or bottom tab bar — a full-bleed mobile-first experience.
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  if (pathname.startsWith("/plant/")) {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const isPublic = isPublicPath(pathname);
+
+  useEffect(() => {
+    if (!isPublic && !isAuthenticated) {
+      navigate({ to: "/login", replace: true });
+    }
+  }, [isPublic, isAuthenticated, navigate]);
+
+  // Standalone routes render full-bleed, without sidebar or bottom tab bar.
+  if (isPublic) {
     return (
       <div className="min-h-screen bg-background">
         <Outlet />
       </div>
     );
   }
+
+  if (!isAuthenticated) {
+    return <div className="min-h-screen bg-background" />;
+  }
+
 
   return (
     <div className="min-h-screen bg-background">
