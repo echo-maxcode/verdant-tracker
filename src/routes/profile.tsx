@@ -62,7 +62,7 @@ function ProfilePage() {
     return () => {
       cancelled = true;
     };
-  }, [authFetch]);
+  }, [authFetch, token]);
 
   function handleLogout() {
     logout();
