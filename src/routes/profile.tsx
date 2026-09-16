@@ -38,13 +38,14 @@ function formatDate(iso: string) {
 }
 
 function ProfilePage() {
-  const { authFetch, logout, user: cachedUser } = useAuth();
+  const { authFetch, logout, token, user: cachedUser } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<AuthUser | null>(cachedUser);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(!cachedUser);
 
   useEffect(() => {
+    if (!token) return; // redirect to /login is handled by the app shell
     let cancelled = false;
     (async () => {
       try {
@@ -61,7 +62,7 @@ function ProfilePage() {
     return () => {
       cancelled = true;
     };
-  }, [authFetch]);
+  }, [authFetch, token]);
 
   function handleLogout() {
     logout();
